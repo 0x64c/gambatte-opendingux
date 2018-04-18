@@ -107,8 +107,8 @@ int menu_main(menu_t *menu) {
     quit_menu = 0;
     /* doing this twice is just an ugly hack to get round an 
      * opendingux pre-release hardware surfaces bug */
-/*    clear_surface(screen, 0);
-    SDL_Flip(screen);*/
+    clear_surface(screen, 0);
+    SDL_Flip(screen);
     clear_surface(screen, 0);
     SDL_Flip(screen);
     return menu->selected_entry;
@@ -264,6 +264,8 @@ static void redraw(menu_t *menu) {
 #ifdef _RS97_
     clear_surface(menu_screen, 0);
     display_menu(menu_screen, menu);
+    SDL_SoftStretch(menu_screen,0,screen,0);
+	SDL_Flip(screen);
     SDL_SoftStretch(menu_screen,0,screen,0);
 #else
     display_menu(screen, menu);
