@@ -260,14 +260,14 @@ static void invert_rect(SDL_Surface* surface, SDL_Rect *rect) {
 }
 
 static void redraw(menu_t *menu) {
-    clear_surface(screen, 0);
 #ifdef _RS97_
     clear_surface(menu_screen, 0);
     display_menu(menu_screen, menu);
     SDL_SoftStretch(menu_screen,0,screen,0);
-	SDL_Flip(screen);
-    SDL_SoftStretch(menu_screen,0,screen,0);
+    SDL_Flip(screen);
+//    SDL_SoftStretch(menu_screen,0,screen,0);
 #else
+    clear_surface(screen, 0);
     display_menu(screen, menu);
 #endif
     SDL_Flip(screen);
