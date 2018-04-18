@@ -32,6 +32,9 @@ public:
 private:
 	SDL_Surface *screen;
 	SDL_Surface *surface;
+#ifdef _RS97_
+	SDL_Surface *scaler_surface;
+#endif
 	SDL_Overlay *overlay;
 	Uint32 startFlags;
 	Uint8 scale;
@@ -43,6 +46,8 @@ private:
 public:
 	SdlBlitter(bool startFull = false, Uint8 scale = 1, bool yuv = false);
 	~SdlBlitter();
+	void scale2y(uint32_t *s, uint32_t *d,int w,int h);
+	void scale2y_(uint32_t *s, uint32_t *d,int w,int h);
 	void setBufferDimensions(unsigned int width, unsigned int height);
 	const PixelBuffer inBuffer() const;
 	void draw();
