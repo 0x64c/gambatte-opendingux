@@ -21,10 +21,16 @@ static Uint32 get_pixel(SDL_Surface *surface, int x, int y);
 
 static int quit_menu;
 static SDL_Surface *screen = NULL;
+#ifdef _RS97_
+static SDL_Surface *menu_screen = NULL;
+#endif
 static SFont_Font* font = NULL;
 
 void libmenu_set_screen(SDL_Surface *set_screen) {
     screen = set_screen;
+#ifdef _RS97_
+    if(menu_screen==NULL)menu_screen = SDL_CreateRGBSurface(SDL_SWSURFACE, 320, 240, 16, 0, 0, 0, 0);
+#endif
 }
 
 void libmenu_set_font(SFont_Font *set_font) {
@@ -41,6 +47,7 @@ int menu_main(menu_t *menu) {
         while (SDL_PollEvent(&event)) {
         switch (event.type) {
             case SDL_QUIT:
+                SDL_Quit();
                 exit(0);
                 break;
             case SDL_KEYDOWN:
@@ -254,7 +261,13 @@ static void invert_rect(SDL_Surface* surface, SDL_Rect *rect) {
 
 static void redraw(menu_t *menu) {
     clear_surface(screen, 0);
+#ifdef _RS97_
+    clear_surface(menu_screen, 0);
+    display_menu(menu_screen, menu);
+    SDL_SoftStretch(menu_screen,0,screen,0);
+#else
     display_menu(screen, menu);
+#endif
     SDL_Flip(screen);
 }
 
