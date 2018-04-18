@@ -13,10 +13,9 @@ elif target == 'rs97':
     include_path = ' -I/opt/rs97-toolchain/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include/SDL'
     bin_path = '/opt/rs97-toolchain/usr/bin/mipsel-linux-'
     sdl_path = '/opt/rs97-toolchain/usr/mipsel-rs97-linux-uclibc/sysroot/usr/bin/'
-    target_defines = ' -D_RS97_ -g3'
+    target_defines = ' -D_RS97_'
     print "Building Gambatte library with RS97 toolchain..."
 else:
-    target_defines = ' -D_RS97_ -g3'
     include_path = ''
     bin_path = ''
     sdl_path = ''
