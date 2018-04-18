@@ -29,7 +29,11 @@ surface(NULL),
 overlay(NULL),
 startFlags(SDL_HWSURFACE | SDL_DOUBLEBUF | (startFull ? SDL_FULLSCREEN : 0)),
 scale(scale),
+#ifdef _RS97_
+scaler(2),
+#else _RS97_
 scaler(0),
+#endif
 yuv(yuv)
 {}
 
@@ -45,7 +49,11 @@ SdlBlitter::~SdlBlitter() {
 
 void SdlBlitter::setBufferDimensions(const unsigned int width, const unsigned int height) {
 	//surface = screen = SDL_SetVideoMode(width * scale, height * scale, SDL_GetVideoInfo()->vfmt->BitsPerPixel == 16 ? 16 : 32, screen ? screen->flags : startFlags);
+#ifdef _RS97_
+	surface = screen = SDL_SetVideoMode(320, 480, 16, screen ? screen->flags : startFlags);
+#else
 	surface = screen = SDL_SetVideoMode(320, 240, 16, screen ? screen->flags : startFlags);
+#endif
 	menu_set_screen(screen);
 	surface = SDL_CreateRGBSurface(SDL_SWSURFACE, width, height, 16, 0, 0, 0, 0);
 	//fprintf(stderr, "surface w: %d, h: %d, pitch: %d, bpp: %d\n", surface->w, surface->h, surface->pitch, surface->format->BitsPerPixel);
@@ -116,7 +124,15 @@ void SdlBlitter::draw() {
 			SDL_UnlockSurface(surface);
 			SDL_UnlockSurface(screen);
 			break;
-		case 2:		/* no scaler */
+		case 2:
+			SDL_LockSurface(screen);
+			SDL_LockSurface(surface);
+			offset = ((480 - 432) / 2) * screen->pitch;
+			scale_2x_3y((uint32_t*)((uint8_t *)screen->pixels + offset), (uint32_t*)surface->pixels);
+			SDL_UnlockSurface(surface);
+			SDL_UnlockSurface(screen);
+			break;
+		case 3:		/* no scaler */
 		default:
 			SDL_Rect dst;
 			dst.x = (screen->w - surface->w) / 2;

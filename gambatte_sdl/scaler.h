@@ -10,6 +10,7 @@ extern "C" {
 
 void fullscreen_upscale(uint32_t *to, uint32_t *from);
 void scale15x(uint32_t *to, uint32_t *from);
+void scale_2x_3y(uint32_t *to, uint32_t *from);
 
 #ifdef __cplusplus
 }

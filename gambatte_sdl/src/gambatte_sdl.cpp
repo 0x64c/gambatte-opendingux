@@ -671,15 +671,22 @@ int GambatteSdl::exec() {
 						}
 					} else {
 						switch (e.key.keysym.sym) {
+#ifdef _RS97_
+						case 279:  //power key
+							return 0;
+							break;
+						case SDLK_3:             //brightness key
+#else
 						case SDLK_BACKSPACE:
 						case SDLK_TAB:
 						case SDLK_SPACE:
 						case SDLK_LSHIFT:
+#endif
 							main_menu(&gambatte, &blitter);
 							
 							//return 0;
 							break;
-						case SDLK_F5: gambatte.saveState(blitter.inBuf().pixels, blitter.inBuf().pitch); break;
+						/*case SDLK_F5: gambatte.saveState(blitter.inBuf().pixels, blitter.inBuf().pitch); break;
 						case SDLK_F6: gambatte.selectState(gambatte.currentState() - 1); break;
 						case SDLK_F7: gambatte.selectState(gambatte.currentState() + 1); break;
 						case SDLK_F8: gambatte.loadState(); break;
@@ -692,7 +699,7 @@ int GambatteSdl::exec() {
 						case SDLK_6: gambatte.selectState(6); break;
 						case SDLK_7: gambatte.selectState(7); break;
 						case SDLK_8: gambatte.selectState(8); break;
-						case SDLK_9: gambatte.selectState(9); break;
+						case SDLK_9: gambatte.selectState(9); break;*/
 						default: break;
 						}
 					}

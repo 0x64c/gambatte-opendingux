@@ -193,6 +193,7 @@ static void callback_options(menu_t *caller_menu) {
     menu_add_entry(menu, menu_entry);
     menu_entry_add_entry(menu_entry, "Fullscreen");
     menu_entry_add_entry(menu_entry, "1.5x");
+    menu_entry_add_entry(menu_entry, "Integer 2x3y");
     menu_entry_add_entry(menu_entry, "None");
     menu_entry->selected_entry = blitter_p->getScaler();
 

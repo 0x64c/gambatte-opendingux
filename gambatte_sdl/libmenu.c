@@ -100,8 +100,8 @@ int menu_main(menu_t *menu) {
 	quit_menu = 0;
 	/* doing this twice is just an ugly hack to get round an 
 	 * opendingux pre-release hardware surfaces bug */
-	clear_surface(screen, 0);
-	SDL_Flip(screen);
+/*	clear_surface(screen, 0);
+	SDL_Flip(screen);*/
 	clear_surface(screen, 0);
 	SDL_Flip(screen);
 	return menu->selected_entry;

@@ -80,6 +80,29 @@ void fullscreen_upscale(uint32_t *to, uint32_t *from) {
         from += 2*160/2;
     }
 }
+void scale_2x_3y(uint32_t *to, uint32_t *from) {
+	uint32_t reg1, reg2;
+	int x, y;
+	for (y=0; y<432/3; y++){
+		for (x=0; x<320/4; x++){
+            __builtin_prefetch(to+4, 1);
+			reg1 = *from;
+			reg2 = reg1 & 0xffff0000;
+			reg2 |= reg2 >> 16;
+			*(to+1) = reg2;
+			*(to+160+1) = reg2;
+			*(to+2*160+1) = reg2;
+			reg2 = reg1 & 0xffff;
+			reg2 |= reg2 << 16;
+			*to = reg2;
+			*(to+160) = reg2;
+			*(to+2*160) = reg2;
+			to+=2;
+			from+=1;
+		}
+		to+=2*160;
+	}
+}
 
 /* Ayla's 1.5x Upscaler - 160x144 to 240x216 */
 	/* Before:
