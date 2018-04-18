@@ -21,17 +21,17 @@
 #include <SDL.h>
 
 usec_t getusecs() {
-	return SDL_GetTicks() * usec_t(1000);
+    return SDL_GetTicks() * usec_t(1000);
 }
 
 void usecsleep(const usec_t usecs) {
-	SDL_Delay((usecs + 999) / 1000);
+    SDL_Delay((usecs + 999) / 1000);
 }
 
 void syncfunc(const long inc) {
-	static AdaptiveSleep asleep;
-	static usec_t last = getusecs();
-	
-	last += asleep.sleepUntil(last, inc);
-	last += inc;
+    static AdaptiveSleep asleep;
+    static usec_t last = getusecs();
+    
+    last += asleep.sleepUntil(last, inc);
+    last += inc;
 }
